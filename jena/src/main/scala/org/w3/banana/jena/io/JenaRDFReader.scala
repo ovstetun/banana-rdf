@@ -58,11 +58,9 @@ object JenaRDFReader {
       sink.graph
     }
 
-    def read(reader: Reader, base: String): Try[Jena#Graph] = Try {
-      val sink = new TripleSink
+    def read(reader: Reader, base: String): Try[Jena#Graph] = {
       // why is Jena deprecating Readers, which should be the correct level to parse character based documents?
-      RDFParser.create().source(new ReaderInputStream(reader,Charset.forName("utf-8"))).lang(lang).base(base).parse(sink)
-      sink.graph
+      read(new ReaderInputStream(reader, Charset.forName("utf-8")), base)
     }
   }
 
